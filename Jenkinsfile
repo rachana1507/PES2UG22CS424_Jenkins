@@ -1,33 +1,27 @@
 pipeline {
     agent any
-
     stages {
-        
-
         stage('Build') {
             steps {
-                echo 'Building the C++ code'
-                sh 'g++ main/helo2.cpp -o main/output'  // Ensure the file name is correct
+                build 'PES2UG22CS424-1'
+                sh 'g++ main.cpp -o output'
+                sh 'make -C main'
             }
         }
-
         stage('Test') {
             steps {
-                echo 'Running compiled program'
-                sh './main/output'
+                sh './main/hello_exec'
             }
         }
-
         stage('Deploy') {
             steps {
-                echo 'Deploying'
+                echo 'Deployment Successful'
             }
         }
     }
-
     post {
         failure {
-            echo 'Pipeline failed'
+            echo 'Pipeline Failed'
         }
     }
 }
